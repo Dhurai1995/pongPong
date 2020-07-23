@@ -1,4 +1,4 @@
-#include<"Bat.h">
+#include "Bat.h"
 
 Bat::Bat(float startX, float startY)
 {
@@ -10,12 +10,12 @@ Bat::Bat(float startX, float startY)
 
 }
 
-FLoatRect Bat::getPosititon()
+sf::FloatRect Bat::getPosition()
 {
 	return mShape.getGlobalBounds();
 }
 
-RectangleShape Bat::getShape()
+sf::RectangleShape Bat::getShape()
 {
 	return mShape;
 }
@@ -44,12 +44,12 @@ void Bat::update(sf::Time dt)
 {
 	if (mMovingLeft)
 	{
-		mPosition.x -= mSpeed * sf::dt.asSeconds();
+		mPosition.x -= mSpeed * dt.asSeconds();
 	}
 
 	if (mMovingRight)
 	{
-		mPosition.x += mSpeed * sf::dt.asSeconds();
+		mPosition.x += mSpeed * dt.asSeconds();
 	}
 	mShape.setPosition(mPosition);
 }

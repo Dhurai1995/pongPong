@@ -1,20 +1,79 @@
-// PonG.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
-#include <iostream>
+// The main file of the pong game
+#include<iostream>
+#include<sstream>
+#include "Bat.h"
+#include<cstdlib>
+#include<SFML\Graphics.hpp>
+#include "Ball.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	sf::VideoMode vm(1920, 1080);
+
+	sf::RenderWindow window(vm, "Pong", sf::Style::Fullscreen);
+	
+	int score = 0;
+	int lives = 3;
+
+	Bat bat(1920 / 2, 1080 - 20);
+	Ball ball(1920 / 2, 0);
+
+	sf::Text hud;
+
+	sf::Font font;
+	font.loadFromFile("fonts/ka1.ttf");
+	
+	hud.setFont(font);
+	hud.setCharacterSize(75);
+	hud.setFillColor(sf::Color::White);
+	hud.setPosition(20, 20);
+	sf::Clock clock;
+
+	while (window.isOpen())
+	{
+		/*
+		Handle the players input
+		*/
+
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			window.close();
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			bat.moveLeft();
+		else
+			bat.stopLeft();
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			bat.moveRight();
+		else
+			bat.stopRight();
+
+		/*
+		Update the bat, the ball and the HUD
+		*/
+
+		sf::Time dt = clock.restart();
+		bat.update(dt);
+		ball.update(dt);
+		std::stringstream ss;
+		ss << "Score: " << score << "Lives:" << lives;
+		hud.setString(ss.str());
+
+		/* 
+		draw the bat, ball and the hud
+		*/
+		window.clear();
+		window.draw(hud);
+		window.draw(bat.getShape());
+		window.draw(ball.getShape());
+		window.display();
+	}
+	return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

@@ -5,8 +5,8 @@ class Bat
 
 {
 	sf::Vector2f mPosition;
-
-	float mSPeed = 1000.0f;
+	sf::RectangleShape mShape;
+	float mSpeed = 1000.0f;
 
 	bool mMovingRight = false;
 	bool mMovingLeft = false;

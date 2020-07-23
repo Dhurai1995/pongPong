@@ -1,0 +1,2 @@
+C:\VS Projects\PonG\Debug\PonG.exe
+C:\VS Projects\PonG\Debug\PonG.pdb
